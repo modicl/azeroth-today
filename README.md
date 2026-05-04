@@ -1,6 +1,6 @@
 # Azeroth Today
 
-A World of Warcraft live event tracker showing active in-game holidays, Mythic+ affixes, and the current season — served from a single Docker container.
+A World of Warcraft live event tracker showing active in-game holidays, Mythic+ affixes, and the current season — served from a single Docker container!.
 
 ## Getting Blizzard API Credentials
 
@@ -58,13 +58,13 @@ docker run -d \
 
 Set these in **Settings → Secrets and variables → Actions** in your GitHub repository:
 
-| Secret | Description |
-|--------|-------------|
-| `DOCKERHUB_USERNAME` | Your Docker Hub username |
-| `DOCKERHUB_TOKEN` | Docker Hub access token (not your password) |
-| `EC2_HOST` | Public IP or hostname of your EC2 instance |
-| `EC2_USER` | SSH user (e.g. `ec2-user`) |
-| `EC2_SSH_KEY` | Private SSH key content for EC2 access |
+| Secret               | Description                                 |
+| -------------------- | ------------------------------------------- |
+| `DOCKERHUB_USERNAME` | Your Docker Hub username                    |
+| `DOCKERHUB_TOKEN`    | Docker Hub access token (not your password) |
+| `EC2_HOST`           | Public IP or hostname of your EC2 instance  |
+| `EC2_USER`           | SSH user (e.g. `ec2-user`)                  |
+| `EC2_SSH_KEY`        | Private SSH key content for EC2 access      |
 
 On your EC2 instance, place a `.env` file at `/home/<EC2_USER>/.env` with your Blizzard credentials.
 
