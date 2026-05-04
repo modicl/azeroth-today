@@ -24,17 +24,28 @@ async function blizzardGet(url, res) {
 }
 
 router.get('/events', (req, res) => {
-  blizzardGet(
-    'https://us.api.blizzard.com/data/wow/event/index?namespace=dynamic-us&locale=en_US',
-    res
-  );
+  // The Blizzard API does not have a general active events endpoint.
+  // Returning an empty array so the frontend gracefully shows "No active in-game events found."
+  res.json({ events: [] });
 });
 
-router.get('/mythic-keystone/affix/index', (req, res) => {
-  blizzardGet(
-    'https://us.api.blizzard.com/data/wow/keystone-affix/index?namespace=static-us&locale=en_US',
-    res
-  );
+router.get('/mythic-keystone/affix/index', async (req, res) => {
+  try {
+    const response = await fetch('https://raider.io/api/v1/mythic-plus/affixes?region=us&locale=en');
+    if (!response.ok) {
+      throw new Error(`Raider.IO error: ${response.status}`);
+    }
+    const data = await response.json();
+    res.json({
+      season: { name: data.title },
+      affixes: data.affix_details.map(a => ({
+        name: a.name,
+        description: a.description
+      }))
+    });
+  } catch (err) {
+    res.status(502).json({ error: err.message });
+  }
 });
 
 module.exports = router;
