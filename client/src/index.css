@@ -1,0 +1,287 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-primary: #0d1117;
+  --bg-secondary: #111827;
+  --bg-card: rgba(15, 20, 35, 0.85);
+  --gold: #c8a951;
+  --gold-light: #e8c96a;
+  --gold-dim: rgba(200, 169, 81, 0.3);
+  --crimson: #9b1c1c;
+  --crimson-light: #c0392b;
+  --text-primary: #e8dcc8;
+  --text-muted: #8a7a64;
+  --border-card: rgba(200, 169, 81, 0.25);
+  --font-heading: 'Cinzel', serif;
+  --font-body: 'Crimson Text', serif;
+}
+
+html, body {
+  height: 100%;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated rune background — CSS only */
+#root::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(155, 28, 28, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(200, 169, 81, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 50%, rgba(13, 17, 23, 0) 0%, rgba(0,0,0,0.4) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Floating particle runes using pseudo-elements on body */
+body::before,
+body::after {
+  content: '᚛ ᚜';
+  position: fixed;
+  font-size: 4rem;
+  color: rgba(200, 169, 81, 0.04);
+  animation: float 18s ease-in-out infinite;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+body::before {
+  top: 10%;
+  left: 5%;
+  animation-delay: 0s;
+}
+
+body::after {
+  bottom: 10%;
+  right: 5%;
+  animation-delay: -9s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.04; }
+  50% { transform: translateY(-30px) rotate(5deg); opacity: 0.08; }
+}
+
+/* Layout */
+.app-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-card);
+}
+
+.app-header h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--gold);
+  text-shadow: 0 0 30px rgba(200, 169, 81, 0.4), 0 2px 4px rgba(0,0,0,0.8);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.4rem;
+}
+
+.app-header .subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-style: italic;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-title::before,
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-dim));
+}
+
+.section-title::after {
+  background: linear-gradient(to left, transparent, var(--gold-dim));
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  backdrop-filter: blur(8px);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(200,169,81,0.03) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.card:hover {
+  box-shadow: 0 0 20px rgba(200, 169, 81, 0.15), 0 4px 20px rgba(0,0,0,0.5);
+  border-color: rgba(200, 169, 81, 0.5);
+  transform: translateY(-2px);
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.03em;
+}
+
+.card-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.card-countdown {
+  font-size: 0.9rem;
+  color: var(--crimson-light);
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+/* Affix card specifics */
+.affix-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.affix-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.affix-name {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  color: var(--gold-light);
+}
+
+.affix-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Season badge */
+.season-banner {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(155, 28, 28, 0.15);
+  border: 1px solid rgba(155, 28, 28, 0.3);
+  border-radius: 4px;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  color: var(--crimson-light);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Loading skeletons */
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-card {
+  height: 120px;
+  border-radius: 6px;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+}
+
+.empty-state-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.4;
+}
+
+.empty-state-text {
+  font-style: italic;
+  font-size: 1.05rem;
+}
+
+/* Error banner */
+.error-banner {
+  background: rgba(155, 28, 28, 0.2);
+  border: 1px solid rgba(155, 28, 28, 0.4);
+  border-radius: 4px;
+  padding: 1rem 1.5rem;
+  color: #f87171;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
