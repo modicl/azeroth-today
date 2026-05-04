@@ -1,6 +1,6 @@
 # Azeroth Today
 
-A World of Warcraft live event tracker showing active in-game holidays, Mythic+ affixes, and the current season — served from a single Docker container.
+A World of Warcraft live event tracker showing active in-game holidays, Mythic+ affixes, and the current season — served from a single Docker container!.
 
 ## Getting Blizzard API Credentials
 
