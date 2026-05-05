@@ -4,6 +4,7 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const tokenRouter = require('./routes/token');
 const proxyRouter = require('./routes/proxy');
+const characterRouter = require('./routes/character');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use('/api', tokenRouter);
 app.use('/api', proxyRouter);
+app.use('/api', characterRouter);
 
 // Serve React build in production
 const distPath = path.join(__dirname, 'public');
